@@ -3,18 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.Servo;
-
 @TeleOp
-    public class MecanumTeleOp extends LinearOpMode {
+    public class Genesis extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // Declare our motors
-        // Make sure your ID's match your configuration
-        //declares motors
+        //declares motors + servos
         DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
         DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
@@ -22,12 +17,14 @@ import com.qualcomm.robotcore.hardware.Servo;
         DcMotor motorLift1 = hardwareMap.dcMotor.get("motorLift");
         Servo clawLeft = hardwareMap.servo.get("servoL");
         Servo clawRight = hardwareMap.servo.get("servoR");
-
         waitForStart();
+
         //reverses the left side motors
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         clawRight.setDirection(Servo.Direction.REVERSE);
 
+        //encoder stuff
+        motorLift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
@@ -40,6 +37,7 @@ import com.qualcomm.robotcore.hardware.Servo;
         motorBackRight.setPower(0);
         motorLift1.setPower(0);
 
+        //declares variables
         double speed = 0.75;
         boolean clawOpen = false;
 
@@ -49,7 +47,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             if (isStopRequested() == true) {
                 break;
             } else {
-                //sets the input values
+                //sets the input values for movement
                 double y = gamepad1.left_stick_y;
                 double x = -gamepad1.left_stick_x;
                 double rx = gamepad1.right_stick_x;
@@ -59,6 +57,7 @@ import com.qualcomm.robotcore.hardware.Servo;
                 motorFrontRight.setPower((speed) * (y - x + rx));
                 motorBackRight.setPower((speed) * (y + x + rx));
 
+                //decreases the speed of the robot if B is pressed --> allows for more precise movement when placing or picking up cones
                 if(gamepad1.b == true) {
                     speed = 0.25;
                 }else{
@@ -73,27 +72,32 @@ import com.qualcomm.robotcore.hardware.Servo;
                 }
                 motorLift1.setPower(0);
 */
+            //using encoders the motors are able to travel a specific distance and will hold its position
+                //moves to highest pole (38'')
                 if(gamepad1.dpad_up == true){
                     motorLift1.setTargetPosition(384*38);
                     motorLift1.setPower(1);
                 }
 
+                //moves to medium pole (28'')
                 if(gamepad1.dpad_left == true){
                     motorLift1.setTargetPosition(384*28);
                     motorLift1.setPower(1);
                 }
 
+                //moves to low pole (18'')
                 if(gamepad1.dpad_right == true){
                     motorLift1.setTargetPosition(384*18);
                     motorLift1.setPower(1);
                 }
 
+                //lifts up cone just enough to place on button thingy (8'')
                 if(gamepad1.dpad_down == true){
-                    motorLift1.setTargetPosition(384*8);
+                    motorLift1.setTargetPosition(0);
                     motorLift1.setPower(1);
                 }
 
-
+            //opens claw
                 if (gamepad1.a == true && clawOpen == true) {
                     clawLeft.setPosition(1);
                     clawRight.setPosition(1);
