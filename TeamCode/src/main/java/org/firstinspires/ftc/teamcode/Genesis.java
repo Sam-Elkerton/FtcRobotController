@@ -25,8 +25,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
         //encoder stuff
         motorLift1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        motorLift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
 
@@ -75,26 +74,31 @@ import com.qualcomm.robotcore.hardware.Servo;
             //using encoders the motors are able to travel a specific distance and will hold its position
                 //moves to highest pole (38'')
                 if(gamepad1.dpad_up == true){
-                    motorLift1.setTargetPosition(384*38);
-                    motorLift1.setPower(1);
+                    motorLift1.setTargetPosition(384*15);
+                    motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motorLift1.setPower(0.75);
                 }
 
                 //moves to medium pole (28'')
                 if(gamepad1.dpad_left == true){
-                    motorLift1.setTargetPosition(384*28);
-                    motorLift1.setPower(1);
+                    motorLift1.setTargetPosition(384*10);
+                    motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motorLift1.setPower(0.75);
                 }
 
                 //moves to low pole (18'')
                 if(gamepad1.dpad_right == true){
-                    motorLift1.setTargetPosition(384*18);
-                    motorLift1.setPower(1);
+                    motorLift1.setTargetPosition(384*5);
+                    motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motorLift1.setPower(0.75);
                 }
 
                 //lifts up cone just enough to place on button thingy (8'')
                 if(gamepad1.dpad_down == true){
                     motorLift1.setTargetPosition(0);
-                    motorLift1.setPower(1);
+                    motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motorLift1.setPower(0.25);
+                    motorLift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 }
 
             //opens claw
@@ -102,13 +106,13 @@ import com.qualcomm.robotcore.hardware.Servo;
                     clawLeft.setPosition(1);
                     clawRight.setPosition(1);
                     clawOpen = false;
-                    sleep(100);
+                    sleep(200);
                 }
                 if (gamepad1.a == true && clawOpen == false) {
                     clawLeft.setPosition(0);
                     clawRight.setPosition(0);
                     clawOpen = true;
-                    sleep(100);
+                    sleep(200);
                     }
                 }
             }
