@@ -131,8 +131,6 @@ public class DriverControl_V2 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
-            Llift.setPower(0);
-            Rlift.setPower(0);
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
@@ -160,7 +158,7 @@ public class DriverControl_V2 extends LinearOpMode {
             }
 
             //every tick is 3.2 mm
-
+/*
             while(gamepad2.dpad_up == true){
                 Llift.setPower(0.75);
                 Rlift.setPower(0.75);
@@ -171,7 +169,33 @@ public class DriverControl_V2 extends LinearOpMode {
                 Rlift.setPower(-0.25);
             }
 
+*/
+            if(gamepad2.dpad_up == true){
+                Llift.setTargetPosition(3000);
+                Rlift.setTargetPosition(3000);
+                Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Llift.setVelocity(1500);
+                Rlift.setVelocity(1500);
+            }
 
+            if(gamepad2.b == true){
+                Llift.setTargetPosition(250);
+                Rlift.setTargetPosition(250);
+                Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Llift.setVelocity(1500);
+                Rlift.setVelocity(1500);
+            }
+
+            if(gamepad2.dpad_down == true){
+                Llift.setTargetPosition(0);
+                Rlift.setTargetPosition(0);
+                Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Llift.setVelocity(1500);
+                Rlift.setVelocity(1500);
+            }
 
             if(gamepad2.a == true && closed == false){
                 clawR.setPosition(0.5);
