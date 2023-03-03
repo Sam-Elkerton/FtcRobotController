@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -74,27 +75,29 @@ public class DriverControl_V2 extends LinearOpMode {
     private DcMotor bl = null;
     private DcMotor fr = null;
     private DcMotor br = null;
-    private DcMotor Llift = null;
-    private DcMotor Rlift = null;
+    private DcMotorEx Llift = null;
+    private DcMotorEx Rlift = null;
 
-    private Servo LFinger = null;
+    private Servo clawR = null;
+    private Servo clawL = null;
 
-    private Servo RFinger = null;
 
     @Override
     public void runOpMode() {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        fl  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        bl  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        fr = hardwareMap.get(DcMotor.class, "right_front_drive");
-        br = hardwareMap.get(DcMotor.class, "right_back_drive");
+        fl  = hardwareMap.get(DcMotor.class, "motorFrontLeft");
+        bl  = hardwareMap.get(DcMotor.class, "motorBackLeft");
+        fr = hardwareMap.get(DcMotor.class, "motorFrontRight");
+        br = hardwareMap.get(DcMotor.class, "motorBackRight");
 
-        int liftCounter = 1;
-        double liftSpeed = 0.5;
-        double grasp = 1;
-        double open = 0;
+        Llift = hardwareMap.get(DcMotorEx.class, "left_lift");
+        Rlift = hardwareMap.get(DcMotorEx.class, "right_lift");
+
+        clawR = hardwareMap.get(Servo.class, "claw1");
+        clawL = hardwareMap.get(Servo.class, "claw2");
+
         boolean closed = false;
 
 
@@ -113,12 +116,14 @@ public class DriverControl_V2 extends LinearOpMode {
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
         Llift.setDirection(DcMotor.Direction.FORWARD);
-        Rlift.setDirection(DcMotor.Direction.FORWARD);
+        Rlift.setDirection(DcMotor.Direction.REVERSE);
+
+        Llift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Rlift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         Llift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Rlift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Llift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Rlift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         waitForStart();
         runtime.reset();
@@ -126,6 +131,8 @@ public class DriverControl_V2 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
+            Llift.setPower(0);
+            Rlift.setPower(0);
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
@@ -152,34 +159,32 @@ public class DriverControl_V2 extends LinearOpMode {
                 rightBackPower  /= max;
             }
 
-            while((gamepad1.dpad_up == true && liftCounter > 0) && (liftCounter<1000)){
-                Llift.setTargetPosition(liftCounter);
-                Rlift.setTargetPosition(liftCounter);
-                Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Llift.setPower(liftSpeed);
-                Rlift.setPower(liftSpeed);
-                liftCounter = liftCounter + 10;
+            //every tick is 3.2 mm
+
+            while(gamepad2.dpad_up == true){
+                Llift.setPower(0.75);
+                Rlift.setPower(0.75);
             }
 
-            while((gamepad1.dpad_down == true && liftCounter > 0) && (liftCounter<1000 && gamepad1.dpad_up == false)){
-                Llift.setTargetPosition(liftCounter);
-                Rlift.setTargetPosition(liftCounter);
-                Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                Llift.setPower(liftSpeed);
-                Rlift.setPower(liftSpeed);
-                liftCounter = liftCounter - 10;
+            while(gamepad2.dpad_down == true){
+                Llift.setPower(-0.25);
+                Rlift.setPower(-0.25);
             }
 
-            if(gamepad1.a == true && closed == false){
-                RFinger.setPosition(grasp);
-                LFinger.setPosition(grasp);
+
+
+            if(gamepad2.a == true && closed == false){
+                clawR.setPosition(0.5);
+                clawL.setPosition(0.5);
+                closed = true;
+                sleep(500);
             }
 
-            if(gamepad1.a == false && closed == true){
-                RFinger.setPosition(open);
-                LFinger.setPosition(open);
+            if(gamepad2.a == true && closed == true){
+                clawR.setPosition(0.4);
+                clawL.setPosition(0.75);
+                closed = false;
+                sleep(500);
             }
 
             // This is test code:
@@ -201,8 +206,8 @@ public class DriverControl_V2 extends LinearOpMode {
 
             // Send calculated power to wheels
             fl.setPower(leftFrontPower);
-            bl.setPower(rightFrontPower);
-            fr.setPower(leftBackPower);
+            bl.setPower(leftBackPower);
+            fr.setPower(rightFrontPower);
             br.setPower(rightBackPower);
         }
     }
