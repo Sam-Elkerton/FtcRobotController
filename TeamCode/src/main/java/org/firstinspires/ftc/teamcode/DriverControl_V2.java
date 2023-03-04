@@ -131,6 +131,7 @@ public class DriverControl_V2 extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
+            double pwr;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
@@ -170,9 +171,16 @@ public class DriverControl_V2 extends LinearOpMode {
             }
 
 */
+            if(gamepad1.a == true){
+                pwr = 0.2;
+            }else{
+                pwr = 1;
+            }
+
+
             if(gamepad2.dpad_up == true){
-                Llift.setTargetPosition(3000);
-                Rlift.setTargetPosition(3000);
+                Llift.setTargetPosition(2900);
+                Rlift.setTargetPosition(2900);
                 Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 Llift.setVelocity(1500);
@@ -180,8 +188,8 @@ public class DriverControl_V2 extends LinearOpMode {
             }
 
             if(gamepad2.b == true){
-                Llift.setTargetPosition(250);
-                Rlift.setTargetPosition(250);
+                Llift.setTargetPosition(1250);
+                Rlift.setTargetPosition(1250);
                 Llift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 Rlift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 Llift.setVelocity(1500);
@@ -229,10 +237,10 @@ public class DriverControl_V2 extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            fl.setPower(leftFrontPower);
-            bl.setPower(leftBackPower);
-            fr.setPower(rightFrontPower);
-            br.setPower(rightBackPower);
+            fl.setPower(pwr*leftFrontPower);
+            bl.setPower(pwr*leftBackPower);
+            fr.setPower(pwr*rightFrontPower);
+            br.setPower(pwr*rightBackPower);
         }
     }
 }
