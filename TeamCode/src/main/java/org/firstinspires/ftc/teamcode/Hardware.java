@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.widget.Button;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -60,19 +62,29 @@ public class Hardware {
         double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     }
 
-    public void ButtonPressLimiter(){
-        boolean XButtonPress = false;
-        boolean YButtonPress = false;
-        boolean AButtonPress = false;
-        boolean BButtonPress = false;
-        boolean DpadUpButtonPress = false;
-        boolean DpadDownButtonPress = false;
-        boolean DpadLeftButtonPress = false;
-        boolean DpadRightButtonPress = false;
-        boolean LeftBumperButtonPress = false;
-        boolean RightBumperButtonPress = false;
-        boolean StartButtonPress = false;
-        boolean BackButtonPress = false;
+    public void ButtonPressLimiter(double time){
+        /*
+        --The main purpose of this function is to get around the problem of having to use sleep() within TeleOp in order for the buttons to not be registered multiple times--
+            - This is done by requiring a Boolean to be true in order for the button to be registered
+            - This function uses ElapsedTime() to set that bool to be true only after a certain delay after previous press
+            - This allows for an adjustable integer of how many times per second that the button can be pressed
+
+       ** Key Things to Remember **
+       Must reset the LastPress bool after any action is done following a button recognization
+       Must also reset the ButtonPress bool to false after any action is done following a button recognization
+         */
+        boolean XButtonPress = true;
+        boolean YButtonPress = true;
+        boolean AButtonPress = true;
+        boolean BButtonPress = true;
+        boolean DpadUpButtonPress = true;
+        boolean DpadDownButtonPress = true;
+        boolean DpadLeftButtonPress = true;
+        boolean DpadRightButtonPress = true;
+        boolean LeftBumperButtonPress = true;
+        boolean RightBumperButtonPress = true;
+        boolean StartButtonPress = true;
+        boolean BackButtonPress = true;
 
         ElapsedTime XLastPress = new ElapsedTime(0);
         ElapsedTime YLastPress = new ElapsedTime(0);
@@ -87,41 +99,41 @@ public class Hardware {
         ElapsedTime StartLastPress = new ElapsedTime(0);
         ElapsedTime BackLastPress = new ElapsedTime(0);
 
-        if(200 < XLastPress.milliseconds() && XButtonPress == true){
-
+        if(time < XLastPress.milliseconds()){
+            XButtonPress = true;
         }
-        if(200 < YLastPress.milliseconds() && YButtonPress == true){
-
+        if(time < YLastPress.milliseconds()){
+            YButtonPress = true;
         }
-        if(200 < ALastPress.milliseconds() && AButtonPress == true){
-
+        if(time < ALastPress.milliseconds()){
+            AButtonPress = true;
         }
-        if(200 < BLastPress.milliseconds() && BButtonPress == true){
-
+        if(time < BLastPress.milliseconds()){
+            BButtonPress = true;
         }
-        if(200 < DpadUpLastPress.milliseconds() && DpadUpButtonPress == true){
-
+        if(time < DpadUpLastPress.milliseconds()){
+            DpadUpButtonPress = true;
         }
-        if(200 < DpadDownLastPress.milliseconds() && DpadDownButtonPress == true){
-
+        if(time < DpadDownLastPress.milliseconds()){
+            DpadDownButtonPress = true;
         }
-        if(200 < DpadLeftLastPress.milliseconds() && DpadLeftButtonPress == true){
-
+        if(time < DpadLeftLastPress.milliseconds()){
+            DpadLeftButtonPress = true;
         }
-        if(200 < DpadRightLastPress.milliseconds() && DpadRightButtonPress == true){
-
+        if(time < DpadRightLastPress.milliseconds()){
+            DpadRightButtonPress = true;
         }
-        if(200 < LeftBumperLastPress.milliseconds() && LeftBumperButtonPress == true){
-
+        if(time < LeftBumperLastPress.milliseconds()){
+            LeftBumperButtonPress = true;
         }
-        if(200 < RightBumperLastPress.milliseconds() && RightBumperButtonPress == true){
-
+        if(time < RightBumperLastPress.milliseconds()){
+            RightBumperButtonPress = true;
         }
-        if(200 < StartLastPress.milliseconds() && StartButtonPress == true){
-
+        if(time < StartLastPress.milliseconds()){
+            StartButtonPress = true;
         }
-        if(200 < BackLastPress.milliseconds() && BackButtonPress == true){
-
+        if(time < BackLastPress.milliseconds()){
+            BackButtonPress = true;
         }
 
 
@@ -129,6 +141,8 @@ public class Hardware {
 
 
     public void init(HardwareMap ahwMap){
+        ButtonPressLimiter(0);
+
         hwMap = ahwMap;
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot( RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
