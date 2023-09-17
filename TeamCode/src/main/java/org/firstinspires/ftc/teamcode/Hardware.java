@@ -62,86 +62,8 @@ public class Hardware {
         double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     }
 
-    public void ButtonPressLimiter(double time){
-        /*
-        --The main purpose of this function is to get around the problem of having to use sleep() within TeleOp in order for the buttons to not be registered multiple times--
-            - This is done by requiring a Boolean to be true in order for the button to be registered
-            - This function uses ElapsedTime() to set that bool to be true only after a certain delay after previous press
-            - This allows for an adjustable integer of how many times per second that the button can be pressed
-
-       ** Key Things to Remember **
-       Must reset the LastPress bool after any action is done following a button recognization
-       Must also reset the ButtonPress bool to false after any action is done following a button recognization
-         */
-        boolean XButtonPress = true;
-        boolean YButtonPress = true;
-        boolean AButtonPress = true;
-        boolean BButtonPress = true;
-        boolean DpadUpButtonPress = true;
-        boolean DpadDownButtonPress = true;
-        boolean DpadLeftButtonPress = true;
-        boolean DpadRightButtonPress = true;
-        boolean LeftBumperButtonPress = true;
-        boolean RightBumperButtonPress = true;
-        boolean StartButtonPress = true;
-        boolean BackButtonPress = true;
-
-        ElapsedTime XLastPress = new ElapsedTime(0);
-        ElapsedTime YLastPress = new ElapsedTime(0);
-        ElapsedTime ALastPress = new ElapsedTime(0);
-        ElapsedTime BLastPress = new ElapsedTime(0);
-        ElapsedTime DpadUpLastPress = new ElapsedTime(0);
-        ElapsedTime DpadDownLastPress = new ElapsedTime(0);
-        ElapsedTime DpadLeftLastPress = new ElapsedTime(0);
-        ElapsedTime DpadRightLastPress = new ElapsedTime(0);
-        ElapsedTime LeftBumperLastPress = new ElapsedTime(0);
-        ElapsedTime RightBumperLastPress = new ElapsedTime(0);
-        ElapsedTime StartLastPress = new ElapsedTime(0);
-        ElapsedTime BackLastPress = new ElapsedTime(0);
-
-        if(time < XLastPress.milliseconds()){
-            XButtonPress = true;
-        }
-        if(time < YLastPress.milliseconds()){
-            YButtonPress = true;
-        }
-        if(time < ALastPress.milliseconds()){
-            AButtonPress = true;
-        }
-        if(time < BLastPress.milliseconds()){
-            BButtonPress = true;
-        }
-        if(time < DpadUpLastPress.milliseconds()){
-            DpadUpButtonPress = true;
-        }
-        if(time < DpadDownLastPress.milliseconds()){
-            DpadDownButtonPress = true;
-        }
-        if(time < DpadLeftLastPress.milliseconds()){
-            DpadLeftButtonPress = true;
-        }
-        if(time < DpadRightLastPress.milliseconds()){
-            DpadRightButtonPress = true;
-        }
-        if(time < LeftBumperLastPress.milliseconds()){
-            LeftBumperButtonPress = true;
-        }
-        if(time < RightBumperLastPress.milliseconds()){
-            RightBumperButtonPress = true;
-        }
-        if(time < StartLastPress.milliseconds()){
-            StartButtonPress = true;
-        }
-        if(time < BackLastPress.milliseconds()){
-            BackButtonPress = true;
-        }
-
-
-    }
-
 
     public void init(HardwareMap ahwMap){
-        ButtonPressLimiter(0);
 
         hwMap = ahwMap;
 

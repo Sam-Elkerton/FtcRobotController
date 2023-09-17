@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.telephony.mbms.MbmsErrors;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -19,19 +21,44 @@ public class Drive {
 
     private Hardware robot = null;
 
-    public Drive(Hardware pRobot){
+    //
+    public Drive( Hardware pRobot)
+    {
         robot = pRobot;
     }
+
+    public void PowerDrive(double pFL, double pFR, double pBR, double pBL)
+    {
+        robot.LeftDriveRear.setPower(pBL);
+        robot.RightDriveRear.setPower(pBR);
+        robot.LeftDriveFront.setPower(pFL);
+        robot.RightDriveFront.setPower(pFR);
+    }
+
+    public void EncoderDrive(double speed, double leftInches, double RightInches, double timeout, double degrees)
+    {
+        double pSpeed = speed;
+
+
+    }
+
+    public void InitializeEncoders(){
+
+    }
+
+    public void CalculateTarget(double leftInches, double rightInches, double degrees) {
+        int newleftTarget;
+        int newRightTarget;
+        int targetInches;
+
+    }
+
+
 
     //this drive is FieldCentric Drive which means that all movements of the robot based on controller inputs
     //are relative to the field and not the robot
     //think of it like a compass, instead of pressing forward on joystick make the robot go forward relative to the
     //front of the robot , it instead will go north on the field, no matter the orientation of the robot
-
-    public void EncoderDrive(int frDistance, int flDistance, int blDistance, int brDistance ){
-
-    }
-
 
 
 }
