@@ -54,7 +54,7 @@ public class Hardware {
 
     }
 
-    public void CalculateCOUNTS_PER_MOTOR_REV(double cpr, double gearRedox, double wheelDiameter){
+    public Hardware(double cpr, double gearRedox, double wheelDiameter){
         //encoders values for COUNTS_PER_INCH of lift
         double COUNTS_PER_MOTOR_REV = cpr;     //eg: Gobilda 13.7:1 Motor
         double DRIVE_GEAR_REDUCTION = gearRedox;     //No gear reduction on lift

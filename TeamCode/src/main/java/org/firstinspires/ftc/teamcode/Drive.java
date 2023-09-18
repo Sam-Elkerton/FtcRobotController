@@ -50,7 +50,6 @@ public class Drive {
         int newleftTarget;
         int newRightTarget;
         int targetInches;
-
     }
 
 
