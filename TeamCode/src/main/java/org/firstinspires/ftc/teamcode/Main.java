@@ -45,8 +45,6 @@ public class Main extends LinearOpMode{
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
-
-
     }
 
     public void InitializeMotors(){

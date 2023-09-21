@@ -32,6 +32,7 @@ public class Auto extends LinearOpMode{
     private  Drive DriveTrain = new Drive(robot);
     private Suspend Actuator = new Suspend(robot);
     private Lift PixelPlace = new Lift(robot);
+    private Launch LaunchPlane = new Launch(robot);
     HardwareMap hwMap = null;
     private BNO055IMU imu;
     private BNO055IMU.Parameters imuParameters;
@@ -54,6 +55,8 @@ public class Auto extends LinearOpMode{
         Actuator.positionActuator(0);
         PixelPlace.positionLift(4);
         PixelPlace.positionLift(0);
+        LaunchPlane.release();
+
 
 
 ;    }

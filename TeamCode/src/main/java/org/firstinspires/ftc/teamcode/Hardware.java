@@ -123,4 +123,6 @@ public class Hardware {
         RightClaw.setPosition(RightClawClosed);
         LeftClaw.setPosition(LeftClawClosed);
     }
+
 }
+
