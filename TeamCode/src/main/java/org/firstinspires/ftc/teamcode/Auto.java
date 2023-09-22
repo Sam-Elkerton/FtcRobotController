@@ -40,21 +40,37 @@ public class Auto extends LinearOpMode{
     private Acceleration gravity;
     @Override
     public void runOpMode(){
+        telemetry.addData("Status", "Initializing");
+        telemetry.update();
         InitializeRobot();
         GetPosition();
 
+        telemetry.addData("Encoder Drive Test", "Running...");
+        telemetry.update();
         DriveTrain.EncoderDrive(1, 10, 10, 10, GetPosition());
         DriveTrain.EncoderDrive(1, 10, 10, 10, GetPosition()+90);
         DriveTrain.EncoderDrive(1, 10, 5, 10, GetPosition());
         DriveTrain.EncoderDrive(1, 5, 10, 10, GetPosition());
+
+        telemetry.addData("Power Drive Test", "Running...");
+        telemetry.update();
         DriveTrain.PowerDrive(0.5, 0.5, 0.5, 0.5);
         DriveTrain.PowerDrive(0.5, -0.5, -0.5, 0.5);
         DriveTrain.PowerDrive(-0.5, 0.5, 0.5, -0.5);
         DriveTrain.PowerDrive(-0.5, -0.5, -0.5, -0.5);
+
+        telemetry.addData("Acuator Test", "Running...");
+        telemetry.update();
         Actuator.positionActuator(4);
         Actuator.positionActuator(0);
+
+        telemetry.addData("PixelPlace Test", "Running...");
+        telemetry.update();
         PixelPlace.positionLift(4);
         PixelPlace.positionLift(0);
+
+        telemetry.addData("Plane Launch Test", "Running...");
+        telemetry.update();
         LaunchPlane.release();
 
 
@@ -87,5 +103,6 @@ public class Auto extends LinearOpMode{
         telemetry.addData("gravity (X)", gravity.xAccel);
         telemetry.update();
         return  angles.firstAngle;
+        
     }
 }

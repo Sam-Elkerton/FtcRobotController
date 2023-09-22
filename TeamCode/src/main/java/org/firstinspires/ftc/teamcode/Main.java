@@ -15,6 +15,9 @@ public class Main extends LinearOpMode{
     private double leftPower;
     private double rightPower;
 
+    private int liftFull = 0;
+    private int actuatorFull = 0;
+
 
     @Override
     public void runOpMode() {
@@ -29,8 +32,14 @@ public class Main extends LinearOpMode{
 
 
             telemetry.addData("Calling", "DriveTrain");
+            telemetry.addData("Calling", "LaunchPlane");
+            telemetry.addData("Calling", "PixelPlace");
+            telemetry.addData("Calling", "Actuator");
             telemetry.update();
             Drive DriveTrain = new Drive(robot) ;
+            Launch LaunchPlane = new Launch(robot);
+            Lift PixelPlace = new Lift(robot);
+            Suspend Actuator = new Suspend(robot);
 
 
             double drive = -gamepad1.left_stick_y;
@@ -44,6 +53,24 @@ public class Main extends LinearOpMode{
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
+
+            if(gamepad1.a == true){
+                LaunchPlane.release();
+                telemetry.addData("Servo", "Releasing...");
+                telemetry.update();
+            }
+
+            if(gamepad1.b == true){
+                PixelPlace.positionLift(liftFull);
+                telemetry.addData("PixelPlace" , "Extending...");
+                telemetry.update();
+            }
+
+            if(gamepad1.x = true){
+                Actuator.positionActuator(actuatorFull);
+                telemetry.addData("Actuator", "Extending...");
+                telemetry.update();
+            }
         }
     }
 
