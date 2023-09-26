@@ -103,6 +103,6 @@ public class Auto extends LinearOpMode{
         telemetry.addData("gravity (X)", gravity.xAccel);
         telemetry.update();
         return  angles.firstAngle;
-        
+
     }
 }
