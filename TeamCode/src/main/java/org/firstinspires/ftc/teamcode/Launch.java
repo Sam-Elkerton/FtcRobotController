@@ -6,14 +6,12 @@ public class Launch {
     public Launch(Hardware laRobot) { robot = laRobot;}
 
     public void release(){
-        robot.RightClaw.setPosition(robot.RightClawOpen);
-        robot.LeftClaw.setPosition(robot.LeftClawOpen);
+        robot.trigger.setPosition(robot.triggerFire);
 
-        while(robot.RightClaw.getPosition() != robot.RightClawOpen){
+        while(robot.trigger.getPosition() != robot.triggerFire){
 
         }
-        robot.RightClaw.setPosition(robot.RightClawClosed);
-        robot.LeftClaw.setPosition(robot.LeftClawClosed);
+        robot.trigger.setPosition(robot.triggerLock);
     }
 
 }

@@ -25,8 +25,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
+@Autonomous(name="Auto Java", group="Linear Opmode")
 
-@Autonomous
 public class Auto extends LinearOpMode{
     private Hardware robot   = new Hardware();
     private  Drive DriveTrain = new Drive(robot);

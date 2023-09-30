@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp
+@Autonomous(name="Main Java", group="Linear Opmode")
+
 public class Main extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -60,11 +62,11 @@ public class Main extends LinearOpMode{
                 telemetry.update();
             }
 
-            if(gamepad1.b == true){
-                PixelPlace.positionLift(liftFull);
-                telemetry.addData("PixelPlace" , "Extending...");
-                telemetry.update();
-            }
+            //if(gamepad1.b == true){
+            //    PixelPlace.positionLift(liftFull);
+            //    telemetry.addData("PixelPlace" , "Extending...");
+            //    telemetry.update();
+            //}
 
             if(gamepad1.x = true){
                 Actuator.positionActuator(actuatorFull);
@@ -77,6 +79,5 @@ public class Main extends LinearOpMode{
     public void InitializeMotors(){
         robot.init(hardwareMap);
 }
-
 
 }

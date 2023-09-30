@@ -22,15 +22,12 @@ public class Hardware {
     public DcMotorEx RightLift = null;
     public DcMotorEx LeftLift = null;
     public DcMotorEx Actuator = null;
-    public Servo RightClaw = null;
-    public Servo LeftClaw = null;
+    public Servo trigger = null;
     public double LiftUpVelocity = 300;
     public double LiftDownVelocity = 300;
-    public double RightClawOpen = 1;
-    public double LeftClawOpen = 1;
+    public double triggerFire = 1;
     public double actuatorVelocity = 300;
-    public double RightClawClosed = 0;
-    public double LeftClawClosed = 0;
+    public double triggerLock = 0;
     public double Speed1 = 0.5;
     public double Speed2 = 1;
     public double Speed3 = 0.25;
@@ -66,23 +63,23 @@ public class Hardware {
 
         imu = hwMap.get(IMU.class, "imu");
 
-        LeftDriveRear = hwMap.get(DcMotorEx.class, "----");
-        LeftDriveFront = hwMap.get(DcMotorEx.class, "----");
-        RightDriveFront = hwMap.get(DcMotorEx.class, "----");
-        RightDriveRear = hwMap.get(DcMotorEx.class, "----");
+        LeftDriveRear = hwMap.get(DcMotorEx.class, "bl");
+        LeftDriveFront = hwMap.get(DcMotorEx.class, "fl");
+        RightDriveFront = hwMap.get(DcMotorEx.class, "fr");
+        RightDriveRear = hwMap.get(DcMotorEx.class, "br");
 
-        RightLift = hwMap.get(DcMotorEx.class, "----");
-        LeftLift = hwMap.get(DcMotorEx.class, "----");
+        //RightLift = hwMap.get(DcMotorEx.class, "----");
+        //LeftLift = hwMap.get(DcMotorEx.class, "----");
 
-        Actuator = hwMap.get(DcMotorEx.class, "----");
+        Actuator = hwMap.get(DcMotorEx.class, "act");
 
         LeftDriveRear.setDirection(DcMotorEx.Direction.FORWARD);
         LeftDriveFront.setDirection(DcMotorEx.Direction.FORWARD);
         RightDriveFront.setDirection(DcMotorEx.Direction.FORWARD);
         RightDriveRear.setDirection(DcMotorEx.Direction.FORWARD);
 
-        RightLift.setDirection(DcMotorEx.Direction.FORWARD);
-        LeftLift.setDirection(DcMotorEx.Direction.FORWARD);
+        //RightLift.setDirection(DcMotorEx.Direction.FORWARD);
+        //LeftLift.setDirection(DcMotorEx.Direction.FORWARD);
 
         Actuator.setDirection(DcMotorEx.Direction.FORWARD);
 
@@ -91,8 +88,8 @@ public class Hardware {
         RightDriveFront.setPower(0);
         RightDriveRear.setPower(0);
 
-        RightLift.setPower(0);
-        LeftLift.setPower(0);
+        //RightLift.setPower(0);
+        //LeftLift.setPower(0);
 
         Actuator.setPower(0);
 
@@ -102,8 +99,8 @@ public class Hardware {
         RightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RightDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         Actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -112,16 +109,14 @@ public class Hardware {
         RightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightDriveRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         Actuator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        RightClaw = hwMap.get(Servo.class, "----");
-        LeftClaw = hwMap.get(Servo.class, "----");
+        trigger = hwMap.get(Servo.class, "----");
 
-        RightClaw.setPosition(RightClawClosed);
-        LeftClaw.setPosition(LeftClawClosed);
+        trigger.setPosition(triggerLock);
     }
 
 }
