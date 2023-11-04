@@ -26,10 +26,20 @@ public class Drive {
     }
 
     public void PowerDrive(double pFL, double pFR, double pBR, double pBL) {
+        robot.LeftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.LeftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.RightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.RightDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         robot.LeftDriveRear.setPower(pBL);
         robot.RightDriveRear.setPower(pBR);
         robot.LeftDriveFront.setPower(pFL);
         robot.RightDriveFront.setPower(pFR);
+
+        robot.LeftDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.RightDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.LeftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.RightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void EncoderDrive(double speed, double leftInches, double rightInches, double timeout, double degrees) {

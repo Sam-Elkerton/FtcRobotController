@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "Main Java", group = "TeleOp")
+@TeleOp(name = "K", group = "TeleOp")
 public class Main extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -31,47 +31,26 @@ public class Main extends LinearOpMode{
 
         while (opModeIsActive()) {
 
-
-            telemetry.addData("Calling", "DriveTrain");
-            telemetry.addData("Calling", "LaunchPlane");
-            telemetry.addData("Calling", "PixelPlace");
-            telemetry.addData("Calling", "Actuator");
             telemetry.update();
             Drive DriveTrain = new Drive(robot) ;
-            Launch LaunchPlane = new Launch(robot);
-            Lift PixelPlace = new Lift(robot);
-            Suspend Actuator = new Suspend(robot);
 
 
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double y = -gamepad1.left_stick_y;
+            double x = gamepad1.left_stick_x * 1.1;
+            double rx = gamepad1.right_stick_x;
 
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
 
-            DriveTrain.PowerDrive(leftPower, rightPower, leftPower, rightPower);
+            DriveTrain.PowerDrive(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
 
-            if(gamepad1.a == true){
-                LaunchPlane.release();
-                telemetry.addData("Servo", "Releasing...");
-                telemetry.update();
-            }
-
-            //if(gamepad1.b == true){
-            //    PixelPlace.positionLift(liftFull);
-            //    telemetry.addData("PixelPlace" , "Extending...");
-            //    telemetry.update();
-            //}
-
-            if(gamepad1.x = true){
-                Actuator.positionActuator(actuatorFull);
-                telemetry.addData("Actuator", "Extending...");
-                telemetry.update();
-            }
         }
     }
 

@@ -23,6 +23,14 @@ public class Hardware {
     public DcMotorEx LeftLift = null;
     public DcMotorEx Actuator = null;
     public Servo trigger = null;
+
+    public Servo claw1 = null;
+    public Servo claw2 = null;
+    public Servo drop = null;
+    public Servo flip1 = null;
+    public Servo flip2 = null;
+    public Servo flip3 = null;
+    public Servo flip4 = null;
     public double LiftUpVelocity = 300;
     public double LiftDownVelocity = 300;
     public double triggerFire = 1;
@@ -68,30 +76,27 @@ public class Hardware {
         RightDriveFront = hwMap.get(DcMotorEx.class, "fr");
         RightDriveRear = hwMap.get(DcMotorEx.class, "br");
 
-        //RightLift = hwMap.get(DcMotorEx.class, "----");
-        //LeftLift = hwMap.get(DcMotorEx.class, "----");
+        RightLift = hwMap.get(DcMotorEx.class, "rl");
+        LeftLift = hwMap.get(DcMotorEx.class, "ll");
 
-        Actuator = hwMap.get(DcMotorEx.class, "act");
 
-        LeftDriveRear.setDirection(DcMotorEx.Direction.FORWARD);
-        LeftDriveFront.setDirection(DcMotorEx.Direction.FORWARD);
+        LeftDriveRear.setDirection(DcMotorEx.Direction.REVERSE);
+        LeftDriveFront.setDirection(DcMotorEx.Direction.REVERSE);
         RightDriveFront.setDirection(DcMotorEx.Direction.FORWARD);
         RightDriveRear.setDirection(DcMotorEx.Direction.FORWARD);
 
-        //RightLift.setDirection(DcMotorEx.Direction.FORWARD);
-        //LeftLift.setDirection(DcMotorEx.Direction.FORWARD);
+        RightLift.setDirection(DcMotorEx.Direction.FORWARD);
+        LeftLift.setDirection(DcMotorEx.Direction.FORWARD);
 
-        Actuator.setDirection(DcMotorEx.Direction.FORWARD);
 
         LeftDriveRear.setPower(0);
         LeftDriveFront.setPower(0);
         RightDriveFront.setPower(0);
         RightDriveRear.setPower(0);
 
-        //RightLift.setPower(0);
-        //LeftLift.setPower(0);
+        RightLift.setPower(0);
+        LeftLift.setPower(0);
 
-        Actuator.setPower(0);
 
 
         LeftDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -99,24 +104,35 @@ public class Hardware {
         RightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RightDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        Actuator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         LeftDriveRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LeftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RightDriveRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Actuator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        trigger = hwMap.get(Servo.class, "----");
+        claw1 = hwMap.get(Servo.class, "c2");
+        claw2 = hwMap.get(Servo.class, "c2");
+        trigger = hwMap.get(Servo.class, "t1");
+        drop = hwMap.get(Servo.class, "d1");
+        flip1 = hwMap.get(Servo.class, "s1");
+        flip2 = hwMap.get(Servo.class, "s2");
+        flip3 = hwMap.get(Servo.class, "s3");
+        flip4 = hwMap.get(Servo.class, "s4");
 
         trigger.setPosition(triggerLock);
+        claw1.setPosition(0);
+        claw2.setPosition(0);
+        drop.setPosition(0);
+        flip1.setPosition(0);
+        flip2.setPosition(0);
+        flip3.setPosition(0);
+        flip4.setPosition(0);
     }
 
 }
