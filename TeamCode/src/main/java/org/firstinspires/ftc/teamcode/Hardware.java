@@ -31,14 +31,8 @@ public class Hardware {
     public Servo flip2 = null;
     public Servo flip3 = null;
     public Servo flip4 = null;
-    public double LiftUpVelocity = 300;
-    public double LiftDownVelocity = 300;
     public double triggerFire = 1;
-    public double actuatorVelocity = 300;
     public double triggerLock = 0;
-    public double Speed1 = 0.5;
-    public double Speed2 = 1;
-    public double Speed3 = 0.25;
 
     public  double     COUNTS_PER_MOTOR_REV    = 1120 ;
     public  double     DRIVE_GEAR_REDUCTION    = 1.0 ;
